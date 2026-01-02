@@ -72,7 +72,7 @@
       font-size: 16px;
       padding: 8px;
       border: none;
-      text-align: right;
+      text-align: center;
       background: transparent;
     }
 
@@ -92,11 +92,11 @@
 </head>
 <body>
 
-<h2>分帳表</h2>
+<h2>Split Bill</h2>
 
 <div class="controls">
-  <button onclick="addPerson()">➕ 人</button>
-  <button onclick="addExpense()">➕ 帳</button>
+  <button onclick="addPerson()">➕ Person</button>
+  <button onclick="addExpense()">➕ Expense</button>
 </div>
 
 <div class="scroll">
@@ -127,7 +127,7 @@ function addPerson() {
 
   tr.innerHTML = `
     <td class="sticky total">0</td>
-    <td class="sticky name"><input placeholder="人名"></td>
+    <td class="sticky name"><input placeholder="Name"></td>
   `;
 
   for (let i = 0; i < expenseCount; i++) {
@@ -174,7 +174,7 @@ function recalc() {
       checks[c].textContent = '✔';
       checks[c].className = 'check-ok';
     } else {
-      checks[c].textContent = `差 ${sum}`;
+      checks[c].textContent = `Diff ${sum}`;
       checks[c].className = 'check-bad';
     }
   }
