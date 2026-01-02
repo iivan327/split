@@ -1,57 +1,57 @@
-!DOCTYPE html
-html lang=zh-Hant
-head
-  meta charset=UTF-8 
-  title分帳表title
-  style
-    body { font-family system-ui, sans-serif; padding 20px; }
-    table { border-collapse collapse; width 100%; }
-    th, td { border 1px solid #ccc; padding 6px; text-align center; }
-    th { background #f5f5f5; }
-    input { width 90px; text-align right; }
-    .name { width 120px; text-align left; }
-    .total { font-weight bold; background #fafafa; }
-    .check { font-weight bold; }
-    .ok { color green; }
-    .bad { color red; }
-    button { margin 8px 4px; }
-  style
-head
-body
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>分帳表</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: center; }
+    th { background: #f5f5f5; }
+    input { width: 90px; text-align: right; }
+    .name { width: 120px; text-align: left; }
+    .total { font-weight: bold; background: #fafafa; }
+    .check { font-weight: bold; }
+    .ok { color: green; }
+    .bad { color: red; }
+    button { margin: 8px 4px; }
+  </style>
+</head>
+<body>
 
-h2分帳表h2
+<h2>分帳表</h2>
 
-button onclick=addPerson()➕ 新增一人button
-button onclick=addExpense()➕ 新增一筆帳button
+<button onclick="addPerson()">➕ 新增一人</button>
+<button onclick="addExpense()">➕ 新增一筆帳</button>
 
-table id=sheet
-  thead
-    tr id=header
-      th總計th
-      th人名th
-    tr
-    tr id=checkRow
-      thth
-      th零和檢查th
-    tr
-  thead
-  tbodytbody
-table
+<table id="sheet">
+  <thead>
+    <tr id="header">
+      <th>總計</th>
+      <th>人名</th>
+    </tr>
+    <tr id="checkRow">
+      <th></th>
+      <th>零和檢查</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
-script
+<script>
 let expenseCount = 0;
 
 function addPerson() {
-  const tbody = document.querySelector(#sheet tbody);
-  const tr = document.createElement(tr);
+  const tbody = document.querySelector("#sheet tbody");
+  const tr = document.createElement("tr");
 
   tr.innerHTML = `
-    td class=total0td
-    tdinput class=name placeholder=人名td
+    <td class="total">0</td>
+    <td><input class="name" placeholder="人名"></td>
   `;
 
-  for (let i = 0; i  expenseCount; i++) {
-    tr.innerHTML += `tdinput type=number oninput=recalc()td`;
+  for (let i = 0; i < expenseCount; i++) {
+    tr.innerHTML += `<td><input type="number" oninput="recalc()"></td>`;
   }
 
   tbody.appendChild(tr);
@@ -60,53 +60,53 @@ function addPerson() {
 function addExpense() {
   expenseCount++;
 
-   header
-  const th = document.createElement(th);
+  // header
+  const th = document.createElement("th");
   th.textContent = `帳 ${expenseCount}`;
-  document.getElementById(header).appendChild(th);
+  document.getElementById("header").appendChild(th);
 
-   check row
-  const check = document.createElement(th);
-  check.className = check;
-  document.getElementById(checkRow).appendChild(check);
+  // check row
+  const check = document.createElement("th");
+  check.className = "check";
+  document.getElementById("checkRow").appendChild(check);
 
-   body rows
-  document.querySelectorAll(#sheet tbody tr).forEach(tr = {
-    const td = document.createElement(td);
-    td.innerHTML = `input type=number oninput=recalc()`;
+  // body rows
+  document.querySelectorAll("#sheet tbody tr").forEach(tr => {
+    const td = document.createElement("td");
+    td.innerHTML = `<input type="number" oninput="recalc()">`;
     tr.appendChild(td);
   });
 }
 
 function recalc() {
-  const rows = document.querySelectorAll(#sheet tbody tr);
-  const checks = document.querySelectorAll(#checkRow .check);
+  const rows = document.querySelectorAll("#sheet tbody tr");
+  const checks = document.querySelectorAll("#checkRow .check");
 
-   reset totals
-  rows.forEach(r = r.querySelector(.total).textContent = 0);
+  // reset totals
+  rows.forEach(r => r.querySelector(".total").textContent = 0);
 
-  for (let col = 0; col  expenseCount; col++) {
+  for (let col = 0; col < expenseCount; col++) {
     let sum = 0;
 
-    rows.forEach(r = {
-      const input = r.children[col + 2].querySelector(input);
-      const val = Number(input.value)  0;
+    rows.forEach(r => {
+      const input = r.children[col + 2].querySelector("input");
+      const val = Number(input.value) || 0;
       sum += val;
 
-      const totalCell = r.querySelector(.total);
+      const totalCell = r.querySelector(".total");
       totalCell.textContent = Number(totalCell.textContent) + val;
     });
 
     if (sum === 0) {
-      checks[col].textContent = ✔ 0;
-      checks[col].className = check ok;
+      checks[col].textContent = "✔ 0";
+      checks[col].className = "check ok";
     } else {
       checks[col].textContent = `差 ${sum}`;
-      checks[col].className = check bad;
+      checks[col].className = "check bad";
     }
   }
 }
-script
+</script>
 
-body
-html
+</body>
+</html>
